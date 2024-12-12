@@ -44,7 +44,7 @@ investment = Investment(price=4000, years=35, times=12, interest=0.12, print_val
 
 # Calculate and display the total earnings
 total_earnings = investment.Auto_Investment_calculator()
-
+```
 <p align="center">
 <img src="Investment_t=35_p=4000.0_a=12_r=12.0.pdf" alt="Description" width="400">
 </p>
