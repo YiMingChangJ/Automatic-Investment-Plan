@@ -35,7 +35,7 @@ The `Investment` class calculates the total value of your investment, considerin
 - `Auto_Investment_calculator` Calculates the total value of your investment, including earnings, and optionally prints results and generates a graph.
 
 <p align="center">
-<img src="Investment_t=35_p=4000.0_a=12_r=12.0.jpg" alt="Description" width="400">
+<img src="Investment_t=35_p=4000.0_a=12_r=12.0.jpg" alt="Description" width="500">
 </p>
 #### Example Usage
 
