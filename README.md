@@ -34,6 +34,9 @@ The `Investment` class calculates the total value of your investment, considerin
 #### Methods
 - `Auto_Investment_calculator` Calculates the total value of your investment, including earnings, and optionally prints results and generates a graph.
 
+<p align="center">
+<img src="Investment_t=35_p=4000.0_a=12_r=12.0.jpg" alt="Description" width="400">
+</p>
 #### Example Usage
 
 ```python
@@ -45,7 +48,4 @@ investment = Investment(price=4000, years=35, times=12, interest=0.12, print_val
 # Calculate and display the total earnings
 total_earnings = investment.Auto_Investment_calculator()
 ```
-![Investment Graph](Investment_t=35_p=4000.0_a=12_r=12.0.jpg)
-<p align="center">
-<img src="Investment_t=35_p=4000.0_a=12_r=12.0.jpg" alt="Description" width="400">
-</p>
+
