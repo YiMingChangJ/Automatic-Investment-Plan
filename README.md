@@ -37,7 +37,7 @@ The `Investment` class calculates the total value of your investment, considerin
 #### Example Usage
 
 ```python
-from investment import Investment
+from auto_investment_calculator import Investment
 
 # Define your investment details
 investment = Investment(price=4000, years=35, times=12, interest=0.12, print_value=True, graph_bool=True, save=False)
