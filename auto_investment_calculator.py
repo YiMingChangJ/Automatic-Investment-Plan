@@ -1,34 +1,37 @@
-"""Module contains Investment class.
+"""
+This module provides tools to model and calculate the earnings from an automatic investment strategy. 
+The `Investment` class encapsulates the logic for estimating returns based on user-specified parameters 
+such as investment frequency, amount, annual interest rate, and investment duration.
 
-The Investment class is used to calculate the earnings of automatic investment strategy 
-where the average annual return is an estimate value, one needs to be realistic about
-the input to obtain realistic earnings after many years.
+The model assumes compound interest and allows users to visualize the investment growth over time. 
+It offers features to calculate the total earnings, display results, and generate graphs of the investment 
+trajectory, making it a practical tool for financial planning.
 
-Good Luck to your investment
+Good luck with your investment!
 """
 from __future__ import annotations
-
 import numpy as np
 from abc import ABC, abstractmethod
 from typing import Any, Optional, Tuple, Union
 import matplotlib.pyplot as plt
 
 class Investment():
-    r"""Earnings is depended on number of investment years, amount of input and investment frequency, 
-        as well as estimate average return.
+    """
+    The `Investment` class models an automatic investment strategy and calculates total 
+    earnings over a specified period, accounting for compound interest. Users can customize 
+    the investment frequency, input amount, and annual return rate. The class also provides 
+    options to print investment details and visualize growth through graphs.
 
-    Args:
-        pricec (float): automatic invest amount for every time (weekly, monthly, yearly)
-        years (int): Number of investment years
-        times (int): Investment frequency
-        interest (float): Average annual Interest/return rate
-        print_value (bool): Whether to print the values
-        graph_bool (bool): Whether to graph the values
-        save (bool): Whether to save the graph
+    Attributes:
+        price (float): The amount invested at each interval (e.g., weekly, monthly, annually).
+        years (int): The total number of years for the investment.
+        times (int): The number of investments per year (frequency).
+        interest (float): The annual average return rate (as a decimal, e.g., 0.12 for 12%).
+        print (bool): Whether to display investment details.
+        graph (bool): Whether to generate a graph of the investment growth.
 
     Raises:
-        ValueError: Raised if number of invest years or frequency is below 1.
-
+        ValueError: Raised if the number of years or investment frequency is less than 1.
     """
     def __init__(self,price:float, years:int, times:int, interest:float, print_value = False, graph_bool = False, save = False) -> None:
         self.price = price
@@ -39,6 +42,30 @@ class Investment():
         self.graph = graph_bool
         
     def Auto_Investment_calculator(self) -> Union[float]:
+        """
+        Calculates the total earnings from an automatic investment strategy.
+
+        This method computes the total investment and earnings using compound interest 
+        based on the specified parameters (price, years, times, and interest). It allows 
+        users to visualize the growth trajectory through graphs and provides detailed 
+        investment insights.
+
+        Returns:
+            Union[float]: The total earnings (principal + return) after the specified period.
+
+        Process:
+            - Validates input parameters (e.g., number of years and frequency).
+            - Computes the annual and cumulative returns using compound interest.
+            - Optionally prints detailed investment metrics.
+            - Optionally generates and displays a graph of the investment growth.
+
+        Raises:
+            ValueError: If the investment years or frequency is less than 1.
+
+        Example:
+            >>> Total_earnings = Investment(4000, 35, 12, 0.12, True, True, False).Auto_Investment_calculator()
+        """        
+        
         if self.times < 1 or self.years < 1:
             raise ValueError
         total_assets  = 0 # total investment including earnings/return
@@ -91,20 +118,20 @@ class Investment():
             ax.set_xlabel('Years',fontsize=size)
             ax.set_ylabel('Principal and Earnings (\$M)',fontsize=size)
             if save == True:
-                fig.savefig('Investment_t={}_p={}_a={}_r={}.pdf'.format(self.years,self.price,self.times,self.interest*100),format='pdf',dpi=1200,bbox_inches='tight')
+                fig.savefig('Investment_t={}_p={}_a={}_r={}.jpg'.format(self.years,self.price,self.times,self.interest*100),format='jpg',dpi=1200,bbox_inches='tight')
             
             plt.show()
 
         return total_assets 
-       
-if __name__ == "__main__":  
-    years = 35 # number of years investment
-    interest_yearly = 0.12  # annual interest with principal/capital
-    times = int(12) # Investment frequency or number of investments
-    price = 4000. # automatic invest amount for every time (weekly, monthly, yearly)
-    yearly_amount = price*times
 
-    print_value = True
-    graph = True
-    save = False
-    Total_earnings = Investment(price,years,times,interest_yearly,print_value,graph,save).Auto_Investment_calculator()
+"Parameters"
+years = 35 # number of years investment
+interest_yearly = 0.12  # annual interest with principal/capital
+times = int(12) # Investment frequency or number of investments
+price = 4000. # automatic invest amount for every time (weekly, monthly, yearly)
+yearly_amount = price*times
+
+print_value = True
+graph = True
+save = False
+Total_earnings = Investment(price,years,times,interest_yearly,print_value,graph,save).Auto_Investment_calculator()
