@@ -1,4 +1,4 @@
-# Automatic-Investment-Plan
+# DCA Return Calculator
 The Investment class is used to calculate the earnings of automatic investment strategy over number of years. Feel free to play around with the simple code.
 
 # Investment Class Module
