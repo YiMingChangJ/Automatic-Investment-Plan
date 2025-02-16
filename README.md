@@ -29,7 +29,7 @@ An interactive dashboard allows you to customize investment parameters such as c
    After cloning the repository, navigate to the directory where the `Investment` class is located, and run the following command:
 
    ```bash
-   streamlit run dashboard.py
+   streamlit run auto_investment_calculator.py
    ```  
   
   #### Screenshot of the Interactive Dashboard
