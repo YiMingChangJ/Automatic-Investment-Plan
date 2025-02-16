@@ -122,6 +122,23 @@ class Investment():
             
             plt.show()
 
+            def plot_investment_growth(self, total_assets_list):
+                size = 26
+                textsize = 18
+                plt.rcParams['lines.linewidth'] = 3
+                plt.rcParams.update({'font.size': size})
+                plt.rc('xtick', labelsize=size)
+                plt.rc('ytick', labelsize=size)
+                plt.rc('text', usetex=True)
+                plt.rc('font', family='serif')
+        
+                fig, ax = plt.subplots(1, 1, figsize=(6, 4))
+                ax.plot(total_assets_list, linestyle='-', marker='o', markerfacecolor='r', markeredgecolor='k', markersize=4)
+                ax.set_xlabel('Years', fontsize=size)
+                ax.set_ylabel('Principal and Earnings ($M)', fontsize=size)
+        
+                st.pyplot(fig)
+
         return total_assets 
 
 "Parameters"
@@ -135,3 +152,27 @@ print_value = True
 graph = True
 save = False
 Total_earnings = Investment(price,years,times,interest_yearly,print_value,graph,save).Auto_Investment_calculator()
+
+
+# Streamlit UI
+def create_investment_dashboard():
+    st.title("Automatic Investment Strategy Calculator")
+    
+    price = st.number_input("Investment per period ($)", min_value=100, value=4000)
+    years = st.number_input("Investment Duration (Years)", min_value=1, value=35)
+    times = st.number_input("Investment Frequency (Times per Year)", min_value=1, value=12)
+    interest_rate = st.slider("Annual Interest Rate (%)", min_value=0, max_value=30, value=12) / 100
+
+    print_details = st.checkbox("Print Investment Details", value=True)
+    show_graph = st.checkbox("Show Investment Growth Graph", value=True)
+    save_graph = st.checkbox("Save Graph", value=False)
+
+    # Calculate total earnings when user presses the button
+    if st.button("Calculate Total Earnings"):
+        investment = Investment(price, years, times, interest_rate, print_value=print_details, graph_bool=show_graph, save=save_graph)
+        total_earnings = investment.Auto_Investment_calculator()
+        st.write(f"Total Earnings after {years} years: ${total_earnings:,.2f}")
+        
+# Run the dashboard
+if __name__ == "__main__":
+    create_investment_dashboard()
