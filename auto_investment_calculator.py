@@ -33,15 +33,16 @@ class Investment():
     Raises:
         ValueError: Raised if the number of years or investment frequency is less than 1.
     """
-    def __init__(self,price:float, years:int, times:int, interest:float, print_value = False, graph_bool = False, save = False) -> None:
+    def __init__(self, price: float, years: int, times: int, interest: float, print_value=False, graph_bool=False, save=False) -> None:
         self.price = price
         self.years = years
         self.times = times
         self.interest = interest
         self.print = print_value
         self.graph = graph_bool
+        self.save = save
         
-    def Auto_Investment_calculator(self) -> Union[float]:
+    def Auto_Investment_calculator(self) -> float:
         """
         Calculates the total earnings from an automatic investment strategy.
 
@@ -68,22 +69,35 @@ class Investment():
         
         if self.times < 1 or self.years < 1:
             raise ValueError
-        total_assets  = 0 # total investment including earnings/return
-        total_assets_list = [] # list to store total investment
-        interest_rate_period = self.interest/self.times # compound interest rate: Annually/Monthly/Weekly
-        for i in range(self.years): # years loop
+        total_assets = 0
+        total_assets_list = []
+        interest_rate_period = self.interest / self.times
+        for i in range(self.years):
             yearly_investment = 0
             if self.times == 1:
                 yearly_investment = self.price
-                total_assets += yearly_investment # Principal + annual return rate
-
-                total_assets = total_assets *(1+self.interest) 
+                total_assets += yearly_investment
+                total_assets = total_assets * (1 + self.interest)
             else:
-                for j in range(1,self.times+1):
-                    yearly_investment += self.price*(1+interest_rate_period)**j  # yearly return
-                total_assets = total_assets *(1+self.interest)
-                total_assets += yearly_investment # Principal + annual return rate
-                total_assets_list.append(total_assets/1e6)
+                for j in range(1, self.times + 1):
+                    yearly_investment += self.price * (1 + interest_rate_period) ** j
+                total_assets = total_assets * (1 + self.interest)
+                total_assets += yearly_investment
+                total_assets_list.append(total_assets / 1e6)
+
+        if self.print:
+            st.write(f"Investment Duration: {self.years} years")
+            st.write(f"Interest Rate: {self.interest * 100}% annually")
+            st.write(f"Investment Frequency: {self.times} times per year")
+            st.write(f"Each Investment: ${round(self.price)}")
+            st.write(f"Total Principal: ${round(self.price * self.times * self.years / 1e6, 3)} million")
+            st.write(f"Total Earnings: ${round((total_assets - self.price * self.times * self.years) / 1e6, 2)} million")
+            st.write(f"Total Investment (Principal + Earnings): ${round(total_assets / 1e6, 2)} million")
+        
+        if self.graph:
+            self.plot_investment_growth(total_assets_list)
+
+        return total_assets
         
         if self.print == True:
             print("Length of Investment: ", years,'years')
@@ -96,63 +110,22 @@ class Investment():
             print("Principal and Earnings: ($)",round(total_assets/1e6,2), ' millions')
         
         print(total_assets_list)
-        if self.graph == True:
+        def plot_investment_growth(self, total_assets_list):
             size = 26
             textsize = 18
             plt.rcParams['lines.linewidth'] = 3
             plt.rcParams.update({'font.size': size})
             plt.rc('xtick', labelsize=size)
             plt.rc('ytick', labelsize=size)
-            plt.rc('text', usetex=True)
+            plt.rc('text', usetex=False)
             plt.rc('font', family='serif')
-            
-            fig, ax = plt.subplots(1,1,figsize=(6,4))
+    
+            fig, ax = plt.subplots(1, 1, figsize=(6, 4))
             ax.plot(total_assets_list, linestyle='-', marker='o', markerfacecolor='r', markeredgecolor='k', markersize=4)
-            ax.text(0.01,total_assets_list[-2],'amount = {}'.format(self.price),fontsize = textsize)
-            ax.text(0.01,total_assets_list[-3],'times = {}'.format(self.times),fontsize = textsize)
-
-            ax.text(0.01,total_assets_list[-4],'r = {} \%'.format(self.interest*100),fontsize = textsize)
-            # ax[1,0].text(0.03,lim_y-0.65,r'$\eta = {}$'.format(eta2),fontsize = textsize)
-            # ax[1,0].text(0.02,lim_y-0.45,r'$\tilde\alpha_\mathrm m = {}$'.format(alpha_m2),fontsize = textsize)
-
-            ax.set_xlabel('Years',fontsize=size)
-            ax.set_ylabel('Principal and Earnings (\$M)',fontsize=size)
-            if save == True:
-                fig.savefig('Investment_t={}_p={}_a={}_r={}.jpg'.format(self.years,self.price,self.times,self.interest*100),format='jpg',dpi=1200,bbox_inches='tight')
-            
-            plt.show()
-
-            def plot_investment_growth(self, total_assets_list):
-                size = 26
-                textsize = 18
-                plt.rcParams['lines.linewidth'] = 3
-                plt.rcParams.update({'font.size': size})
-                plt.rc('xtick', labelsize=size)
-                plt.rc('ytick', labelsize=size)
-                plt.rc('text', usetex=True)
-                plt.rc('font', family='serif')
-        
-                fig, ax = plt.subplots(1, 1, figsize=(6, 4))
-                ax.plot(total_assets_list, linestyle='-', marker='o', markerfacecolor='r', markeredgecolor='k', markersize=4)
-                ax.set_xlabel('Years', fontsize=size)
-                ax.set_ylabel('Principal and Earnings ($M)', fontsize=size)
-        
-                st.pyplot(fig)
-
-        return total_assets 
-
-"Parameters"
-years = 35 # number of years investment
-interest_yearly = 0.12  # annual interest with principal/capital
-times = int(12) # Investment frequency or number of investments
-price = 4000. # automatic invest amount for every time (weekly, monthly, yearly)
-yearly_amount = price*times
-
-print_value = True
-graph = True
-save = False
-Total_earnings = Investment(price,years,times,interest_yearly,print_value,graph,save).Auto_Investment_calculator()
-
+            ax.set_xlabel('Years', fontsize=size)
+            ax.set_ylabel('Principal and Earnings ($M)', fontsize=size)
+    
+            st.pyplot(fig)
 
 # Streamlit UI
 def create_investment_dashboard():
@@ -176,3 +149,5 @@ def create_investment_dashboard():
 # Run the dashboard
 if __name__ == "__main__":
     create_investment_dashboard()
+
+# streamlit run filename.py
