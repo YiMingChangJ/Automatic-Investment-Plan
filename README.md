@@ -12,12 +12,11 @@ The Investment Class allows you to calculate the earnings of an automatic invest
 By inputting the initial investment amount, frequency of contributions, expected rate of return, and duration, you can estimate the future value of your investments, including both principal and compounded earnings.
 
 ### Features
-
+- **Interactive Dashboard**: Visualize and modify investment parameters through an interactive dashboard to better understand your investment growth.
 - **Automatic Investment Contributions**: Set a fixed amount to be invested at regular intervals (monthly, quarterly, etc.).
 - **Compounded Annual Return**: Estimate earnings based on a fixed average annual interest rate, compounded over the frequency of investments.
 - **Customizable Frequency and Duration**: Define how often you make contributions and how many years the investment will last.
 - **Visualization**: Plot the progression of your investments over time, showing both principal and earnings.
-- **Interactive Dashboard**: Visualize and modify investment parameters through an interactive dashboard to better understand your investment growth.
 
 ### Interactive Dashboard Feature
 
